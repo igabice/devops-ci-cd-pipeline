@@ -1,0 +1,4 @@
+ec2.cer
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
