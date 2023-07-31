@@ -106,7 +106,7 @@ resource "aws_instance" "Jenkins" {
   }
   
 }
-#create EC2 - Ansible
+#create EC2 - Ansible Control Node
 resource "aws_instance" "AnsibleController" {
   ami = var.ami
   instance_type = var.instance_type
@@ -118,6 +118,22 @@ resource "aws_instance" "AnsibleController" {
 
   tags = {
     Name = "Ansible - Control Node"
+  }
+  
+}
+#create EC2 - Ansible Managed Node
+resource "aws_instance" "AnsibleManagedNode1" {
+  ami = var.ami
+  instance_type = var.instance_type
+  key_name = "ec2"
+  vpc_security_group_ids = [aws_security_group.Mylab-SecurityGroup.id]
+  subnet_id = aws_subnet.Mylab-Subnet1.id
+  associate_public_ip_address = true
+  user_data = file("./AnsibleManagedNode.sh")
+  # AnsibleMagedNode
+
+  tags = {
+    Name = "Ansible - MN Apache Tomcat"
   }
   
 }
