@@ -137,3 +137,20 @@ resource "aws_instance" "AnsibleManagedNode1" {
   }
   
 }
+
+#create EC2 - Docker Host
+resource "aws_instance" "DockerHost" {
+  ami = var.ami
+  instance_type = var.instance_type
+  key_name = "ec2"
+  vpc_security_group_ids = [aws_security_group.Mylab-SecurityGroup.id]
+  subnet_id = aws_subnet.Mylab-Subnet1.id
+  associate_public_ip_address = true
+  user_data = file("./Docker.sh")
+  # AnsibleMagedNode
+
+  tags = {
+    Name = "Docker Host"
+  }
+  
+}
